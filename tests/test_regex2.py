@@ -2,6 +2,7 @@ import re
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
+from selenium.webdriver.chrome.options import Options
 
 # Desenler
 username_pattern = r'^[a-z0-9_-]{4,}$'  # Kullanıcı adının en az 4 karakter uzunluğunda olması, küçük harfler, rakamlar, alt tire ve tire işaretlerinden oluşması
@@ -11,8 +12,12 @@ password_pattern = r'^[a-zA-Z0-9_-]{8,}$'  # Şifrenin en az 8 karakter uzunluğ
 # Test senaryosu
 def test_login():
     # WebDriver'ı başlat
-    driver = webdriver.Chrome()
+    options = Options()
+    options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
     driver.maximize_window()
+    yield driver
+    driver.quit()
 
     try:
         # Test edilecek web sitesini aç
