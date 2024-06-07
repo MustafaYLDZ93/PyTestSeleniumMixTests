@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 import time
 from selenium.webdriver.chrome.options import Options
 
+
 # Desenler
 username_pattern = r'^[a-z0-9_-]{4,}$'  # Kullanıcı adının en az 4 karakter uzunluğunda olması, küçük harfler, rakamlar, alt tire ve tire işaretlerinden oluşması
 password_pattern = r'^[a-zA-Z0-9_-]{8,}$'  # Şifrenin en az 8 karakter uzunluğunda olması, harfler, sayılar, alt tire ve tire karakterlerinden oluşması
@@ -16,8 +17,6 @@ def test_login():
     options.add_argument("--headless")
     driver = webdriver.Chrome(options=options)
     driver.maximize_window()
-    yield driver
-    driver.quit()
 
     try:
         # Test edilecek web sitesini aç
@@ -25,11 +24,11 @@ def test_login():
 
         # Kullanıcı adı ve şifre alanlarını bul
         username_field = driver.find_element(By.ID, "user-name")
-        password_field = driver.find_element(By.ID, "passwords")
+        password_field = driver.find_element(By.ID, "password")
 
         # Test dizesi
-        test_username = "standard_user"  # kullanıcı adı
-        test_password = "secret_sauce"   # şifre deseni
+        test_username = "standard_user"  # expected kullanıcı adı
+        test_password = "secret_sauce"   # expected şifre
 
         # Desenle eşleşme kontrolü
         username_match = re.match(username_pattern, test_username)
